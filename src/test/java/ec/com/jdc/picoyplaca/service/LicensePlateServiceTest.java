@@ -56,7 +56,6 @@ public class LicensePlateServiceTest {
 		String licenseNumber2 = "PBU0198";
 		licensePlateService.setLicensePlateNumber(licenseNumber2);
 		assertEquals(licenseNumber2, licensePlateService.getLicensePlateNumber());
-	}
-	
+	}	
 	
 }
