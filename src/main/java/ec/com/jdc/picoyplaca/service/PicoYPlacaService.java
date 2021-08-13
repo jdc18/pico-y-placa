@@ -1,5 +1,7 @@
 package ec.com.jdc.picoyplaca.service;
 
+import java.time.LocalTime;
+
 import ec.com.jdc.picoyplaca.exceptions.InvalidArgumentsException;
 import ec.com.jdc.picoyplaca.exceptions.InvalidDateException;
 import ec.com.jdc.picoyplaca.exceptions.InvalidLicenseNumberException;
@@ -9,6 +11,12 @@ public class PicoYPlacaService {
 	private LicensePlateService licensePlateService = new LicensePlateService();
 	private String date;
 	private String time;
+	
+	// TODO extract this a global constants
+	private static LocalTime MORNING_LOWER_LIMIT = LocalTime.parse("07:00");
+	private static LocalTime MORNING_UPPER_LIMIT = LocalTime.parse("09:30");
+	private static LocalTime AFTERNOON_LOWER_LIMIT = LocalTime.parse("16:00");
+	private static LocalTime AFTERNOON_UPPER_LIMIT = LocalTime.parse("19:30");
 	
 	public void setArguments(String[] args) throws InvalidArgumentsException, InvalidLicenseNumberException, InvalidDateException, InvalidTimeException {
 		validateArguments(args);
@@ -23,7 +31,7 @@ public class PicoYPlacaService {
 		if(args == null || args.length == 0)
 			throw new InvalidArgumentsException("There are no arguments");
 		if(args.length < 3)
-			throw new InvalidArgumentsException("The program receives 3 arguments, the license number(Ex.: PBU9876) , date yyyy-mm-dd(Ex.: 2021-10-21) and time HHhMM (Ex.:14h10)  ");
+			throw new InvalidArgumentsException("The program receives 3 arguments, the license number(Ex.: PBU9876) , date yyyy-mm-dd(Ex.: 2021-10-21) and time HHhMM (Ex.:14:10)  ");
 		if(args.length > 3)
 			throw new InvalidArgumentsException("There are more than 3 arguments");
 		
@@ -39,13 +47,26 @@ public class PicoYPlacaService {
 	public void validateTime(String date) throws InvalidTimeException {
 		if(date == null)
 			throw new InvalidTimeException("Time is null");
-		if(!date.matches("([01]?[0-9]|2[0-3])h[0-5][0-9]"))
-			throw new InvalidTimeException("Time format is wrong. It should be HH:MM(Ex.: 16h20)");
+		if(!date.matches("([01]?[0-9]|2[0-3]):s[0-5][0-9]"))
+			throw new InvalidTimeException("Time format is wrong. It should be HH:MM(Ex.: 16:20)");
 	}
 	
-	public boolean calculatePicoYPlaca(String plateNumber, String date, String time) {
-		return true;
+	public boolean calculatePicoYPlaca(String licenseNumber, String date, String time) {
+		//if(time)
+		return false;
 	}
 	
+	public boolean isTimeRestricted(String timeStr) {
+		LocalTime time= LocalTime.parse(timeStr);
+		if(time.equals(MORNING_LOWER_LIMIT))
+			return true;
+		if(time.isAfter(MORNING_LOWER_LIMIT) && time.isBefore(MORNING_UPPER_LIMIT))
+			return true;
+		if( time.equals(AFTERNOON_LOWER_LIMIT))
+			return true;
+		if(time.isAfter(AFTERNOON_LOWER_LIMIT) && time.isBefore(AFTERNOON_UPPER_LIMIT))
+			return true;
+		return false;
+	}
 	
 }
