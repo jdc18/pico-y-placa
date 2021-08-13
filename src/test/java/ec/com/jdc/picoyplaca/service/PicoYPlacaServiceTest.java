@@ -101,35 +101,35 @@ public class PicoYPlacaServiceTest {
 	}
 	
 	@Test
-	public void ifTimeIsRestrictedMorningReturnsTrue() throws InvalidTimeException {
+	public void ifTimeIsRestrictedMorningReturnsTrue() {
 		String time = "07:15";
 		boolean isRestricted = picoYPlacaService.isTimeRestricted(time);
 		assertTrue(isRestricted);
 	}
 	
 	@Test
-	public void ifTimeIsRestrictedMorningJustAtLowerLimitReturnsTrue() throws InvalidTimeException {
+	public void ifTimeIsRestrictedMorningJustAtLowerLimitReturnsTrue()  {
 		String time = "07:00";
 		boolean isRestricted = picoYPlacaService.isTimeRestricted(time);
 		assertTrue(isRestricted);
 	}
 	
 	@Test
-	public void ifTimeIsNotRestrictedMorningBeforeRestrictionReturnsFalse() throws InvalidTimeException {
+	public void ifTimeIsNotRestrictedMorningBeforeRestrictionReturnsFalse(){
 		String time = "06:12";
 		boolean isRestricted = picoYPlacaService.isTimeRestricted(time);
 		assertFalse(isRestricted);
 	}
 	
 	@Test
-	public void ifTimeIsNotRestrictedMorningAfterRestrictionReturnsFalse() throws InvalidTimeException {
+	public void ifTimeIsNotRestrictedMorningAfterRestrictionReturnsFalse() {
 		String time = "10:30";
 		boolean isRestricted = picoYPlacaService.isTimeRestricted(time);
 		assertFalse(isRestricted);
 	}
 	
 	@Test
-	public void ifTimeIsNotRestsrictedMorningJustAtMorningUpperLimitRestrictionReturnsFalse() throws InvalidTimeException {
+	public void ifTimeIsNotRestsrictedMorningJustAtMorningUpperLimitRestrictionReturnsFalse()  {
 		String time = "09:30";
 		boolean isRestricted = picoYPlacaService.isTimeRestricted(time);
 		assertFalse(isRestricted);
@@ -137,46 +137,86 @@ public class PicoYPlacaServiceTest {
 	
 	
 	@Test
-	public void ifTimeIsRestrictedAfternoonReturnsTrue() throws InvalidTimeException {
+	public void ifTimeIsRestrictedAfternoonReturnsTrue()  {
 		String time = "16:15";
 		boolean isRestricted = picoYPlacaService.isTimeRestricted(time);
 		assertTrue(isRestricted);
 	}
 	
 	@Test
-	public void ifTimeIsRestrictedAfternoonJustAtLowerLimitReturnsTrue() throws InvalidTimeException {
+	public void ifTimeIsRestrictedAfternoonJustAtLowerLimitReturnsTrue() {
 		String time = "16:00";
 		boolean isRestricted = picoYPlacaService.isTimeRestricted(time);
 		assertTrue(isRestricted);
 	}
 	
 	@Test
-	public void ifTimeIsNotRestrictedAfternoonBeforeRestrictionReturnsFalse() throws InvalidTimeException {
+	public void ifTimeIsNotRestrictedAfternoonBeforeRestrictionReturnsFalse() {
 		String time = "13:12";
 		boolean isRestricted = picoYPlacaService.isTimeRestricted(time);
 		assertFalse(isRestricted);
 	}
 	
 	@Test
-	public void ifTimeIsNotRestrictedAfternoonAfterRestrictionReturnsFalse() throws InvalidTimeException {
+	public void ifTimeIsNotRestrictedAfternoonAfterRestrictionReturnsFalse() {
 		String time = "20:30";
 		boolean isRestricted = picoYPlacaService.isTimeRestricted(time);
 		assertFalse(isRestricted);
 	}
 	
 	@Test
-	public void ifTimeIsNotRestrictedAfternoonAfterAtUpperLimitRestrictionReturnsFalse() throws InvalidTimeException {
+	public void ifTimeIsNotRestrictedAfternoonAfterAtUpperLimitRestrictionReturnsFalse() {
 		String time = "19:30";
 		boolean isRestricted = picoYPlacaService.isTimeRestricted(time);
 		assertFalse(isRestricted);
 	}
-/*
+	
 	@Test
-	public void ifTimeIsRestrictedReturnsTrue() throws InvalidTimeException {
-		String licenseNumber = "PBU0191";
+	public void ifDayIsWeekendReturnsFalse() {
+		int lastDigit = 0;
+		String date = "2021-08-14";
+		boolean isRestricted = picoYPlacaService.isDayRestricted(lastDigit, date);
+		assertFalse(isRestricted);
+	}
+	
+	@Test
+	public void ifDayIsWeekendSundayReturnsFalse() {
+		int lastDigit = 3;
+		String date = "2021-08-15";
+		boolean isRestricted = picoYPlacaService.isDayRestricted(lastDigit, date);
+		assertFalse(isRestricted);
+	}
+	
+	@Test
+	public void ifDayIsMondayAndHasRestrictionsReturnsTrue() {
+		int lastDigit = 1;
 		String date = "2021-08-02";
-		String time = "20h12";
-		boolean canDrive = picoYPlacaService.calculatePicoYPlaca(licenseNumber, date, time);
-		assertTrue(canDrive);
-	}*/
+		boolean isRestricted = picoYPlacaService.isDayRestricted(lastDigit, date);
+		assertTrue(isRestricted);
+	}
+	
+	@Test
+	public void ifDayIsMondayAndHasRestrictionsReturnsFalse() {
+		int lastDigit = 3;
+		String date = "2021-08-02";
+		boolean isRestricted = picoYPlacaService.isDayRestricted(lastDigit, date);
+		assertFalse(isRestricted);
+	}
+	
+	@Test
+	public void ifDayIsTuesdayAndHasRestrictionsReturnsTrue() {
+		int lastDigit = 3;
+		String date = "2021-08-03";
+		boolean isRestricted = picoYPlacaService.isDayRestricted(lastDigit, date);
+		assertTrue(isRestricted);
+	}
+	
+	@Test
+	public void ifDayIsTuesdayAndHasRestrictionsReturnsFalse() {
+		int lastDigit = 8;
+		String date = "2021-08-03";
+		boolean isRestricted = picoYPlacaService.isDayRestricted(lastDigit, date);
+		assertFalse(isRestricted);
+	}
+	
 }

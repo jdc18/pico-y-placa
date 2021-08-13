@@ -1,5 +1,7 @@
 package ec.com.jdc.picoyplaca.service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import ec.com.jdc.picoyplaca.exceptions.InvalidArgumentsException;
@@ -66,6 +68,38 @@ public class PicoYPlacaService {
 			return true;
 		if(time.isAfter(AFTERNOON_LOWER_LIMIT) && time.isBefore(AFTERNOON_UPPER_LIMIT))
 			return true;
+		return false;
+	}
+	
+	public boolean isDayRestricted(int lastDigit,String dateStr) {
+		LocalDate date= LocalDate.parse(dateStr);
+		DayOfWeek dayOfweek = date.getDayOfWeek();
+		//System.out.println(date.getDayOfWeek());
+		switch (dayOfweek) {
+		case MONDAY:
+			if(lastDigit == 1 || lastDigit == 2) 
+				return true;
+			break;
+		case TUESDAY:		
+			if(lastDigit == 3 || lastDigit == 4)
+				return true;
+			break;
+		case WEDNESDAY:
+			if(lastDigit == 5 || lastDigit == 6)
+				return true;
+			break;
+		case THURSDAY:
+			if(lastDigit == 7 || lastDigit == 8)
+				return true;
+			break;
+		case FRIDAY:
+			if(lastDigit == 9 || lastDigit == 10)
+				return true;
+			break;
+		case SATURDAY:
+		case SUNDAY:
+			return false;
+		}
 		return false;
 	}
 	
