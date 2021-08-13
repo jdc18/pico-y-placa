@@ -218,5 +218,42 @@ public class PicoYPlacaServiceTest {
 		boolean isRestricted = picoYPlacaService.isDayRestricted(lastDigit, date);
 		assertFalse(isRestricted);
 	}
+	// TODO test everyday of the week
+	
+	@Test
+	public void ifDateAndTimeHaveRestrictionsShouldReturnTrue() {
+		String licenseNumber = "PBA0001";
+		String date = "2021-08-02";
+		String time = "09:23";
+		boolean isRestricted = picoYPlacaService.hasRestriction(licenseNumber,date, time);
+		assertTrue(isRestricted);
+	}
+	
+	@Test
+	public void ifDateHasRestrictionButDayDoesntShouldReturnFalse() {
+		String licenseNumber = "PBA0001";
+		String date = "2021-08-02";
+		String time = "12:23";
+		boolean isRestricted = picoYPlacaService.hasRestriction(licenseNumber,date, time);
+		assertFalse(isRestricted);
+	}
+	
+	@Test
+	public void ifDateDoesntHaveRestrictionButDayHasShouldReturnFalse() {
+		String licenseNumber = "PBA0001";
+		String date = "2021-08-03";
+		String time = "09:23";
+		boolean isRestricted = picoYPlacaService.hasRestriction(licenseNumber,date, time);
+		assertFalse(isRestricted);
+	}
+	
+	@Test
+	public void ifDateAndimeDontHaveRestrictionsReturnFalse() {
+		String licenseNumber = "PBA0001";
+		String date = "2021-08-03";
+		String time = "12:23";
+		boolean isRestricted = picoYPlacaService.hasRestriction(licenseNumber,date, time);
+		assertFalse(isRestricted);
+	}
 	
 }

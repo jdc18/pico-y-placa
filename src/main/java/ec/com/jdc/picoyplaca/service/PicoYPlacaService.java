@@ -11,8 +11,8 @@ import ec.com.jdc.picoyplaca.exceptions.InvalidTimeException;
 
 public class PicoYPlacaService {
 	private LicensePlateService licensePlateService = new LicensePlateService();
-	private String date;
-	private String time;
+	private String dateStr;
+	private String timeStr;
 	
 	// TODO extract this a global constants
 	private static LocalTime MORNING_LOWER_LIMIT = LocalTime.parse("07:00");
@@ -24,9 +24,9 @@ public class PicoYPlacaService {
 		validateArguments(args);
 		licensePlateService.setLicensePlateNumber(args[0]);
 		validateDate(args[1]);
-		this.date = args[1];
+		dateStr = args[1];
 		validateTime(args[2]);
-		this.time = args[2];
+		timeStr = args[2];
 	}
 
 	public void validateArguments(String[] args) throws InvalidArgumentsException {
@@ -37,6 +37,10 @@ public class PicoYPlacaService {
 		if(args.length > 3)
 			throw new InvalidArgumentsException("There are more than 3 arguments");
 		
+	}
+	
+	public boolean checkRestriction() {
+		return hasRestriction(licensePlateService.getLicensePlateNumber(), dateStr, timeStr);
 	}
 	
 	public void validateDate(String date) throws InvalidDateException {
@@ -53,8 +57,10 @@ public class PicoYPlacaService {
 			throw new InvalidTimeException("Time format is wrong. It should be HH:MM(Ex.: 16:20)");
 	}
 	
-	public boolean calculatePicoYPlaca(String licenseNumber, String date, String time) {
-		//if(time)
+	public boolean hasRestriction(String licenseNumber, String dateStr, String timeStr) {
+		Integer lastDigit = Integer.parseInt(licenseNumber.substring(6, 7));
+		if(isDayRestricted(lastDigit, dateStr) && isTimeRestricted(timeStr))
+			return true;
 		return false;
 	}
 	
@@ -101,6 +107,18 @@ public class PicoYPlacaService {
 			return false;
 		}
 		return false;
+	}
+
+	public LicensePlateService getLicensePlateService() {
+		return licensePlateService;
+	}
+
+	public String getDateStr() {
+		return dateStr;
+	}
+
+	public String getTimeStr() {
+		return timeStr;
 	}
 	
 }
