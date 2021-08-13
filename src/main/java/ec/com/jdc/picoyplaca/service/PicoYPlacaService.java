@@ -53,7 +53,7 @@ public class PicoYPlacaService {
 	public void validateTime(String date) throws InvalidTimeException {
 		if(date == null)
 			throw new InvalidTimeException("Time is null");
-		if(!date.matches("([01]?[0-9]|2[0-3]):s[0-5][0-9]"))
+		if(!date.matches("([01]?[0-9]|2[0-3]):[0-5][0-9]"))
 			throw new InvalidTimeException("Time format is wrong. It should be HH:MM(Ex.: 16:20)");
 	}
 	
