@@ -36,24 +36,23 @@ public class PicoYPlacaService {
 			throw new InvalidArgumentsException("The program receives 3 arguments, the license number(Ex.: PBU9876) , date yyyy-mm-dd(Ex.: 2021-10-21) and time HHhMM (Ex.:14:10)  ");
 		if(args.length > 3)
 			throw new InvalidArgumentsException("There are more than 3 arguments");
-		
 	}
 	
 	public boolean checkRestriction() {
 		return hasRestriction(licensePlateService.getLicensePlateNumber(), dateStr, timeStr);
 	}
 	
-	public void validateDate(String date) throws InvalidDateException {
-		if(date == null)
+	public void validateDate(String dateStr) throws InvalidDateException {
+		if(dateStr == null)
 			throw new InvalidDateException("Date is null");
-		if(!date.matches("\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])*"))
+		if(!dateStr.matches("\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])*"))
 			throw new InvalidDateException("Date format is wrong. It should be yyyy-mm-dd(Ex.: 2021-10-21)");	
 	}
 	
-	public void validateTime(String date) throws InvalidTimeException {
-		if(date == null)
+	public void validateTime(String timeStr) throws InvalidTimeException {
+		if(timeStr == null)
 			throw new InvalidTimeException("Time is null");
-		if(!date.matches("([01]?[0-9]|2[0-3]):[0-5][0-9]"))
+		if(!timeStr.matches("([01][0-9]|2[0-3]):[0-5][0-9]"))
 			throw new InvalidTimeException("Time format is wrong. It should be HH:MM(Ex.: 16:20)");
 	}
 	
