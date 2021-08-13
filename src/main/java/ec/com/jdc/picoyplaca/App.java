@@ -1,8 +1,6 @@
 package ec.com.jdc.picoyplaca;
 
-import java.time.LocalDate;
-
-import ec.com.jdc.picoyplaca.service.LicensePlateService;
+import ec.com.jdc.picoyplaca.service.PicoYPlacaService;
 
 public class App {
 	public static void main(String[] args) {
@@ -10,14 +8,17 @@ public class App {
 		for(int i=0; i<args.length; i++) {
 			System.out.println(args[i]);
 		}
-		LicensePlateService licensePlateService= new LicensePlateService();
+		PicoYPlacaService picoYPlacaService= new PicoYPlacaService();
 
 		try {
-			licensePlateService.setLicensePlateNumber(args[0]);
-
+			picoYPlacaService.setArguments(args);
+			String restriction = " can be on the road";
+			if(picoYPlacaService.checkRestriction()) {
+				restriction = " cannot be on the road";
+			}
+			System.out.println("The car with license plate " + picoYPlacaService.getLicensePlateService().getLicensePlateNumber().toUpperCase() +
+					" on the date " + picoYPlacaService.getDateStr() + " at " + picoYPlacaService.getTimeStr()+ restriction );
 			
-			//TODO fix this with arguments
-			System.out.println(LocalDate.now());
 		}catch (Exception e) {
 			// TODO: handle exception
 			System.err.println("Error: " + e.getMessage());
