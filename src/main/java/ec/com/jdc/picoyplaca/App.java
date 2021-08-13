@@ -12,9 +12,9 @@ public class App {
 
 		try {
 			picoYPlacaService.setArguments(args);
-			String restriction = " cannot be on the road";
+			String restriction = " can be on the road";
 			if(picoYPlacaService.checkRestriction()) {
-				restriction = " can be on the road";
+				restriction = " cannot be on the road";
 			}
 			System.out.println("The car with license plate " + picoYPlacaService.getLicensePlateService().getLicensePlateNumber().toUpperCase() +
 					" on the date " + picoYPlacaService.getDateStr() + " at " + picoYPlacaService.getTimeStr()+ restriction );
