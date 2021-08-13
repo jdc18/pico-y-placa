@@ -7,7 +7,7 @@ public class InvalidTimeException extends Exception {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public InvalidDateException (String msg){
+	public InvalidTimeException (String msg){
 		super(msg);
 	}
 
